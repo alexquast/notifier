@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="bower_components/jquery/jquery.min.js"></script>
+        <script src="bower_components/underscore/underscore-min.js"></script>
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <script src="js/lib/jquery.hammer.js"></script>
+
+        <script src="js/mox.js"></script>
+
+        <script>
+            $(function () {
+                setLanguage(localUserConfig.lang, $.noop);
+
+                $('[data-role="page"]')
+                    .addClass('page')
+                    .css('min-height', innerHeight + 'px');
+                
+                $('#next').on('click', function () {
+                    goTo('main', 'second', 'slideleft');
+                });
+
+                $('#prev').on('click', function () {
+                    goTo('second', 'main', 'slideright');
+                });
+            });
+
+            var goTo = function (from, to, animation) {
+                $('#' + to).addClass(animation + ' in current')
+                    .on('webkitAnimationEnd animationend', function () {
+                        $(this).removeClass('slideleft in ' + animation );
+                    }).css('z-index', '10');
+                
+                $('#' + from)
+                    .removeClass('current')
+                    .addClass(animation + ' out inmotion')
+                    .on('webkitAnimationEnd animationend', function () {
+                        $(this).removeClass('out inmotion ' + animation);
+                    }).css('z-index', '0');
+                
+            }
+
+        </script>
+        <link rel="stylesheet" href="css/pure.css"></link>
+        <style>
+            body {
+                background: #f0eceb;
+                color: #f0eceb;
+            }
+            .page {
+                z-index: 0;
+                position: absolute;
+                width: 100%;
+
+            }
+            .page:not(.current):not(.inmotion) {
+                display: none;
+            } 
+
+            .text {
+                color: #46292e;
+            }
+            .accent-color-1 {
+                background-color: #f15b4a;
+            }
+            .accent-color-2 {
+                background-color: #4bc6d8;
+            }
+            .widget {
+                margin: 10px 0px;
+            }
+            .widget-title {
+                position: absolute;
+                font-size: 35px;
+                font-weight: bold;
+                color: rgba(255,255,255,.6);
+                top: -6px;
+                left: 0px;
+            }
+            .box {
+                position: relative;
+                border-radius: 2px;
+                padding: 5px;
+            }
+            .greeting {
+                display: inline-block;
+                font-size: 22px;
+                line-height: 54px;
+                vertical-align: middle;
+                margin-left: 8px;
+            }
+            .contact-image {
+                width: 50px;
+                height: 50px;
+                border-radius: 27px;
+                background: url(css/bild.png) center center no-repeat;
+                background-size: 50px;
+                border: 2px solid #fff;
+                display: inline-block;
+                float: left;
+            }
+
+            li {
+                list-style-type: none;
+                color: #333;
+                background-color: rgba(255, 255, 255, .4);
+                padding: 4px 2px;
+                margin: 4px 0px;
+            }
+            ul {
+                padding:0;
+            }
+            .icon-option {
+                display: block;
+                width: 35px;
+                height: 30px;
+                background-color: rgba(1, 1, 1, 0.2);
+                position: relative;
+                right: -260px;
+                top: -5px;
+                border-radius: 2px;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 30px;
+                font-weight: normal;
+                font-style: italic;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                border-top-left-radius: 0;
+            }
+            .sender {
+                font-weight: bold;
+                font-size: 14px;
+                display: inline-block;
+                padding-bottom: 4px;
+            }
+            .date {
+                display: inline-block;
+                font-size: 14px;
+                position: absolute;
+                right: 10px;
+            }
+            .teaser {
+                font-size: 14px;
+                color: #555;
+            }
+            .subject {
+                font-size: 16px;
+                padding-bottom: 3px;
+            }
+            .ellipsis {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .overlay {
+                background-color: rgba(255,255,255,.9);
+            }
+            .in, .out, .inmotion {
+                -webkit-animation-duration: 200ms;
+                -webkit-animation-fill-mode: both;
+                -webkit-animation-timing-function: ease-in-out;
+            }
+            .animate {
+                -webkit-animation-duration: 50s;
+            }
+            .slideleft.in {
+                -webkit-animation-name: slideLeftIn;
+            }
+
+            .slideleft.out {
+                -webkit-animation-name: slideLeftOut;
+            }
+
+            @-webkit-keyframes slideLeftIn {
+                0% {
+                    -webkit-transform: translateX(100%);
+                } 
+                100% {
+                    -webkit-transform: translateX(0);
+                }
+            }
+
+            @-webkit-keyframes slideLeftOut {
+                0% {
+                    -webkit-transform: translateX(0%);
+                } 
+                100% {
+                    -webkit-transform: translateX(-100%);
+                }
+            }
+
+            .slideright.in {
+                -webkit-animation-name: slideRightIn;
+            }
+
+            .slideright.out {
+                -webkit-animation-name: slideRightOut;
+            }
+
+            @-webkit-keyframes slideRightIn {
+                0% {
+                    -webkit-transform: translateX(-100%);
+                } 
+                100% {
+                    -webkit-transform: translateX(0);
+                }
+            }
+
+            @-webkit-keyframes slideRightOut {
+                0% {
+                    -webkit-transform: translateX(0%);
+                } 
+                100% {
+                    -webkit-transform: translateX(100%);
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+    <div id="main" class="pure-g current" data-role="page">
+        <div class="pure-u-1 widget">
+            <div class="l-box accent-color-1 box">
+               <div class="contact-image"></div>
+               <div class="greeting">Guten Abend Alex</div> 
+               <div class="text">Du hast keine neuen Mails</div>
+               <a id="next" href="#">next</a>
+            </div>
+            
+        </div>
+        <div class="pure-u-1 widget">
+            <div class="l-box accent-color-2 box">
+                <div class="icon-option">i</div>
+                <div class="header">
+                    <div class="widget-title">E-Mail</div> 
+                    <div class="text">Du hast keine neuen Mails</div>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>
+                            <div class="cell swipeable">
+                                <div class="sender ellipsis">Kacka, Wurstblinker</div>
+                                <div class="date">14:31</div>
+                                <div class="subject ellipsis">Einladung zum Essen</div>
+                                <div class="teaser ellipsis">Hi Alex, wollte dich nur kurz einladen</div>
+                                <div class="overlay cell">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="sender ellipsis">Quast, Alexander</div>
+                            <div class="date">Gestern</div>
+                            <div class="subject ellipsis">Re: Meeting Minutes Kick-Off</div>
+                            <div class="teaser ellipsis">Hi Alex, anbei die Meeting minutes von gestern</div>
+                        </li>
+                        <li>
+                            <div class="sender ellipsis">Stefan, Janowitsch</div>
+                            <div class="date">Gestern</div>
+                            <div class="subject ellipsis">Meeting Minutes Kick-Off</div>
+                            <div class="teaser ellipsis">Hi Alex, anbei die Meeting minutes von gestern</div>
+                        </li>
+                        <li>
+                            <div class="sender ellipsis">Stefan, Janowitsch</div>
+                            <div class="date">Gestern</div>
+                            <div class="subject ellipsis">Meeting Minutes Kick-Off</div>
+                            <div class="teaser ellipsis">Hi Alex, anbei die Meeting minutes von gestern</div>
+                        </li>
+                        <li>
+                            <div class="sender ellipsis">Stefan, Janowitsch</div>
+                            <div class="date">Gestern</div>
+                            <div class="subject ellipsis">Meeting Minutes Kick-Off</div>
+                            <div class="teaser ellipsis">Hi Alex, anbei die Meeting minutes von gestern</div>
+                        </li>
+                    </ul>
+                </div>
+               
+            </div>
+            
+        </div>
+        
+
+    </div>
+
+    <div id="second" class="pure-g" data-role="page">
+        <div class="pure-u-1 widget">
+            <div class="l-box accent-color-2 box">
+                <div class="icon-option">i</div>
+                <div class="widget-title">Termine</div> 
+                <div class="text">Keine anstehende Termine</div>
+                <a id="prev" href="#">prev</a>
+
+            </div>
+        </div>
+    </div>
+    </body>
+  
+</html>
